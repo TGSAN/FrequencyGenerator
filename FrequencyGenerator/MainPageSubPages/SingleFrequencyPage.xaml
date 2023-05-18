@@ -9,53 +9,43 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" 
-    d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Unloaded="Page_Unloaded">
 
     <Page.Resources>
         <conv:Hz x:Name="HzConverter"/>
     </Page.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="36,36,36,36" MaxWidth="1000">
-            <controls:GroupItem HeaderText="Frequency" ContentText="Range: 0-24000 Hz">
-                <controls:GroupItem.Children>
-                    <StackPanel Orientation="Vertical">
-
-                        <ItemsControl>
-                            <Rectangle Height="16"/>
-                            <Rectangle Height="1" Fill="{ThemeResource CardStrokeColorDefault}"/>
-                            <Rectangle Height="16"/>
-                        </ItemsControl>
-                        <ItemsControl Margin="18, 0">
-                            <Slider Header="{Binding Value, RelativeSource={RelativeSource Self}, Converter={StaticResource HzConverter}}" ThumbToolTipValueConverter="{StaticResource HzConverter}" Minimum="0" Maximum="24000" StepFrequency="1" Value="0" />
-                        </ItemsControl>
-                    </StackPanel>
-                </controls:GroupItem.Children>
-            </controls:GroupItem>
-            <Rectangle Height="3"/>
-            <muxc:Expander IsExpanded="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
-                <muxc:Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Playback Control" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
-                        <ToggleButton Grid.Column="1" HorizontalAlignment="Right">
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontSize="14" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe768;"/>
-                                <Rectangle Width="8"/>
-                                <TextBlock Text="Play"/>
-                            </StackPanel>
-                        </ToggleButton>
-                    </Grid>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
-                    <StackPanel>
-                        <Slider Header="Volume" Minimum="0" Maximum="100" StepFrequency="1" Value="100" />
-                        <Slider Header="Balance" Minimum="-100" Maximum="100" StepFrequency="1" Value="0" TickFrequency="100" TickPlacement="Outside" />
-                    </StackPanel>
-                </muxc:Expander.Content>
-            </muxc:Expander>
-        </StackPanel>
+        <ScrollViewer VerticalScrollMode="Auto" Margin="0, 32, 0, 0">
+            <StackPanel Orientation="Vertical" Margin="36, 0, 36, 36" MaxWidth="1000">
+                <controls:FrequencyControl x:Name="frequencyControl" FrequencyChanged="frequencyControl_FrequencyChanged" WaveTypeChanged="frequencyControl_WaveTypeChanged">
+                </controls:FrequencyControl>
+                <Rectangle Height="3"/>
+                <muxc:Expander IsExpanded="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                    <muxc:Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Playback Control" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+                            <ToggleButton x:Name="playToggleButton" Grid.Column="1" HorizontalAlignment="Right" MinWidth="80" Click="playToggleButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontSize="14" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="{x:Bind GetPlayButtonGlyphByState(playToggleButton.IsChecked), Mode=OneWay}"/>
+                                    <Rectangle Width="8"/>
+                                    <TextBlock Text="{x:Bind GetPlayButtonTextByState(playToggleButton.IsChecked), Mode=OneWay}"/>
+                                </StackPanel>
+                            </ToggleButton>
+                        </Grid>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel>
+                            <Slider x:Name="volumeSlider" Header="Volume" Minimum="0" Maximum="100" StepFrequency="1" Value="100" ValueChanged="volumeSlider_ValueChanged" />
+                            <Slider x:Name="balanceSlider" Header="Balance" Minimum="-100" Maximum="100" StepFrequency="1" Value="0" TickFrequency="100" TickPlacement="Outside" ValueChanged="balanceSlider_ValueChanged" />
+                        </StackPanel>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

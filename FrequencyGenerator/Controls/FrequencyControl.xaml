@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="FrequencyGenerator.Controls.FrequencyControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FrequencyGenerator.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:FrequencyGenerator.Converters" xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <conv:Hz x:Name="HzConverter"/>
+    </UserControl.Resources>
+    <local:GroupItem HeaderText="Frequency" ContentText="Range: 0-24000 Hz">
+        <local:GroupItem.Children>
+            <StackPanel Orientation="Vertical">
+                <ItemsControl>
+                    <Rectangle Height="16"/>
+                    <Rectangle Height="1" Fill="{ThemeResource CardStrokeColorDefault}"/>
+                    <Rectangle Height="16"/>
+                </ItemsControl>
+                <ItemsControl Margin="18, 0">
+                    <Slider x:Name="FrequencySlider" ThumbToolTipValueConverter="{StaticResource HzConverter}" Minimum="0" Maximum="24000" StepFrequency="1" Value="{x:Bind Frequency, Mode=TwoWay}" >
+                        <Slider.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <PathIcon Grid.Column="1" Data="{x:Bind GetWaveIconData(WaveType), Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                <Rectangle Grid.Column="2" Width="8"/>
+                                <controls:NumberBox Grid.Column="3" x:Name="NumberBoxSpinButtonPlacementExample"
+                                    Value="{Binding ElementName=FrequencySlider, Path=Value, Mode=TwoWay}"
+                                    Minimum="{Binding ElementName=FrequencySlider, Path=Minimum}"
+                                    Maximum="{Binding ElementName=FrequencySlider, Path=Maximum}"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Right"
+                                    SpinButtonPlacementMode="Compact"
+                                    SmallChange="10"
+                                    LargeChange="100" />
+                                <Rectangle Grid.Column="2" Width="8"/>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Hz" />
+                            </StackPanel>
+                        </Slider.Header>
+                    </Slider>
+                </ItemsControl>
+                <ItemsControl>
+                    <Rectangle Height="16"/>
+                    <Rectangle Height="1" Fill="{ThemeResource CardStrokeColorDefault}"/>
+                    <Rectangle Height="16"/>
+                </ItemsControl>
+                <ItemsControl Margin="18, 0">
+                    <ComboBox x:Name="waveTypeComboBox" SelectedItem="{x:Bind WaveType, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+                </ItemsControl>
+            </StackPanel>
+        </local:GroupItem.Children>
+    </local:GroupItem>
+</UserControl>

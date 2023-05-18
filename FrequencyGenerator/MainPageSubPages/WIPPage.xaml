@@ -9,6 +9,6 @@
     d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Padding="56,16,0,0" Text="功能开发中"></TextBlock>
+        <TextBlock Padding="56,16,0,0" Text="Coming Soon"></TextBlock>
     </Grid>
 </Page>

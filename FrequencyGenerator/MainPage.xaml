@@ -76,12 +76,12 @@
             </muxc:NavigationView.MenuItems>
 
             <muxc:NavigationView.FooterMenuItems>
-                <muxc:NavigationViewItem Content="登录">
+                <muxc:NavigationViewItem Content="User">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe77b;"/>
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Content="设置">
+                <muxc:NavigationViewItem Content="Settings">
                     <muxc:NavigationViewItem.Icon>
                         <muxc:AnimatedIcon>
                             <muxc:AnimatedIcon.Source>
